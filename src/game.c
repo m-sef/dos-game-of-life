@@ -1,21 +1,28 @@
 #include "game.h"
 
-GAME game;
+GAME* game;
 
-void start_game(WINDOW* window, char* rulestring)
+void start_game(const uint16_t seed, char* rulestring)
 {
+    WINDOW* window = initscr();
     char pressed = 0;
+
+    game = (GAME*) malloc(sizeof(GAME));
+
+    srand(seed);
+
+    nodelay(window, true);
+    noecho();
 
     install_timer_isr();
 
     // Initialize
-    game.automata->grid = init_grid(GRID_HEIGHT, GRID_WIDTH);
-    game.automata->rules = init_automata_rules(rulestring);
+    game->ruleset = init_ruleset(rulestring);
+    game->grid = init_grid(GRID_HEIGHT, GRID_WIDTH);
 
-    randomize_grid(game.automata->grid, 2);
-
-    register_alarm(&update_automata, TICK_SPEED);
-    register_alarm(&draw_grid, TICK_SPEED);
+    randomize_grid();
+    draw_grid();
+    update_game();
 
     // TODO: Find definition for CTRL-C
     while (pressed != 0x03)
@@ -26,12 +33,46 @@ void start_game(WINDOW* window, char* rulestring)
     }
 
     restore_old_timer_isr();
+
+    endwin();
 }
 
-void update_automata()
+void set_cell(const size_t row, const size_t col, const uint8_t val)
 {
-    int row;
-    int col;
+    set_grid(game->grid, row, col, val);
+}
+
+uint8_t get_cell(const size_t row, const size_t col)
+{
+    return get_grid(game->grid, row, col);
+}
+
+uint8_t get_alive_neighbors(const size_t row, const size_t col)
+{
+    uint8_t alive_neighbors = 0;
+    int row_offset;
+    int col_offset;
+
+    for (row_offset = -1; row_offset <= 1; row_offset++)
+    {
+        for (col_offset = -1; col_offset <= 1; col_offset++)
+        {
+            if (!row_offset && !col_offset)
+            {
+                continue;
+            }
+
+            alive_neighbors += get_cell(row + row_offset, col + col_offset) & 1;
+        }
+    }
+
+    return alive_neighbors;
+}
+
+void update_game()
+{
+    size_t row;
+    size_t col;
     uint8_t alive_neighbors;
     uint8_t cell;
 
@@ -39,17 +80,17 @@ void update_automata()
     {
         for (col = 0; col < GRID_WIDTH; col++)
         {
-            alive_neighbors = get_alive_neighbors(game.automata, row, col);
-            cell = get_cell(game.automata, row, col);
-
-            if (!cell && get_birth(game.automata->rules, alive_neighbors))
+            alive_neighbors = get_alive_neighbors(row, col);
+            cell = get_cell(row, col);
+            
+            if (!cell && get_birth_flag(game->ruleset, alive_neighbors))
             {
-                set_cell(game.automata, row, col, cell | 0x02);
+                set_cell(row, col, cell | 0x02);
             }
 
-            if (cell && get_survival(game.automata->rules, alive_neighbors))
+            if (cell && get_survival_flag(game->ruleset, alive_neighbors))
             {
-                set_cell(game.automata, row, col, cell | 0x02);
+                set_cell(row, col, cell | 0x02);
             }
         }
     }
@@ -58,12 +99,27 @@ void update_automata()
     {
         for (col = 0; col < GRID_WIDTH; col++)
         {
-            cell = get_cell(game.automata, row, col);
-            set_cell(game.automata, row, col, cell >> 1);
+            cell = get_cell(row, col);
+            set_cell(row, col, cell >> 1);
         }
     }
+    
 
-    register_alarm(&update_automata, TICK_SPEED);
+    register_alarm(&update_game, TICK_SPEED);
+}
+
+void randomize_grid()
+{
+    size_t row;
+    size_t col;
+
+    for (row = 0; row < GRID_HEIGHT; row++)
+    {
+        for (col = 0; col < GRID_WIDTH; col++)
+        {
+            set_cell(row, col, rand() & 1);
+        }
+    }
 }
 
 void draw_hud()
@@ -73,16 +129,16 @@ void draw_hud()
 
 void draw_grid()
 {
-    int row;
-    int col;
+    size_t row;
+    size_t col;
     uint8_t cell;
 
     for (row = 0; row < GRID_HEIGHT / 2; row++)
     {
         for (col = 0; col < GRID_WIDTH; col++)
         {
-            cell = get_cell(game.automata, row * 2, col);
-            cell |= get_cell(game.automata, (row * 2) + 1, col) << 1;
+            cell = get_cell(row * 2, col);
+            cell |= get_cell((row * 2) + 1, col) << 1;
 
             switch (cell)
             {

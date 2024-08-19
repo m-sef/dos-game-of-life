@@ -30,16 +30,8 @@ static void display_version()
 	puts("gol " VERSION);
 }
 
-static WINDOW* configure_window(WINDOW* window)
-{
-	nodelay(window, true);
-	noecho();
-	return window;
-}
-
 extern int main(const int argc, char** argv)
 {
-	WINDOW* window;
 	uint16_t seed = time(NULL);
 	int opt = 0;
 
@@ -62,11 +54,6 @@ extern int main(const int argc, char** argv)
 		}
 	}
 
-	srand(seed);
-
-	window = configure_window(initscr());
-	start_game(window, argv[argc - 1]);
-
-	endwin();
+	start_game(seed, argv[argc - 1]);
 	return EXIT_SUCCESS;
 }
