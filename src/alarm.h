@@ -4,7 +4,9 @@
 #include <stdint.h>
 #include <dos.h>
 
+#ifndef ALARMS_CAPACITY
 #define ALARMS_CAPACITY 20
+#endif
 
 typedef void (*func_ptr)();
 

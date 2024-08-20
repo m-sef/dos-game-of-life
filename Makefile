@@ -18,5 +18,5 @@ clean
 .c.obj: .autodepend
 	$(CC) $(CFLAGS) $<
 
-gol.exe: main.obj alarm.obj game.obj ruleset.obj grid.obj
+gol.exe: main.obj automata.obj ruleset.obj grid.obj alarm.obj 
 	$(LINK) $(LDFLAGS) n $@ f *.obj l $(LIBCURSES)

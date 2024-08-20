@@ -6,7 +6,7 @@
 #include <time.h>
 
 #include "version.h"
-#include "game.h"
+#include "automata.h"
 
 static void display_usage()
 {
@@ -54,6 +54,6 @@ extern int main(const int argc, char** argv)
 		}
 	}
 
-	start_game(seed, argv[argc - 1]);
+	init_automata(seed, argv[argc - 1]);
 	return EXIT_SUCCESS;
 }

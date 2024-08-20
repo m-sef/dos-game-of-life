@@ -21,7 +21,7 @@ void parse_rulestring(RULESET* rules, char* rulestring)
     token = strtok(rulestring, "/");
     while (token != NULL)
     {
-        switch (token[0])
+        switch (toupper(token[0]))
         {
         case 'B':
             for (i = 1; i < strlen(token); i++)
