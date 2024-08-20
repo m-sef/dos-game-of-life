@@ -21,8 +21,8 @@ void start_game(const uint16_t seed, char* rulestring)
     game->grid = init_grid(GRID_HEIGHT, GRID_WIDTH);
 
     randomize_grid();
-    draw_grid();
     update_game();
+    draw_grid();
 
     // TODO: Find definition for CTRL-C
     while (pressed != 0x03)
