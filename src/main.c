@@ -27,7 +27,7 @@ static void display_help()
 	puts("  B3/S23               Life");
 	puts("  B35678/S5678         Diamoeba");
 	puts("  B4678/S35678         Anneal");
-	puts("  B3/12345             Maze");
+	puts("  B3/S12345             Maze");
 }
 
 static void display_version()
