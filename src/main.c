@@ -47,13 +47,13 @@ extern int main(const int argc, char** argv)
 		{
 		case 'a':
 			anti = true;
-			break;
+			continue;
 		case 'h':
 			display_help();
 			exit(EXIT_SUCCESS);
 		case 's':
 			seed = atoi(optarg);
-			break;
+			continue;;
 		case 'v':
 			display_version();
 			exit(EXIT_SUCCESS);
