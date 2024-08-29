@@ -1,6 +1,6 @@
 #include "grid.h"
 
-GRID* init_grid(const size_t height, const size_t width)
+GRID* init_grid(const size_t height, const size_t width, const uint8_t default_val)
 {
     GRID* new_grid = (GRID*) malloc(sizeof(GRID));
     size_t row;
@@ -14,8 +14,9 @@ GRID* init_grid(const size_t height, const size_t width)
 
     new_grid->height = height;
     new_grid->width = width;
+    new_grid->default_val = default_val;
 
-    clear_grid(new_grid, 0);
+    clear_grid(new_grid, default_val);
 
     return new_grid;
 }
@@ -33,7 +34,7 @@ uint8_t get_grid(const GRID* grid, const size_t row, const size_t col)
 {
     if (row >= grid->height || col >= grid->width)
     {
-        return 0;
+        return grid->default_val;
     }
     return grid->data[row][col];
 }

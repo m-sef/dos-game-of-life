@@ -3,7 +3,7 @@
 RULESET* ruleset;
 GRID* grid;
 
-void init_automata(const uint16_t seed, char* rulestring)
+void init_automata(const uint16_t seed, char* rulestring, const bool anti)
 {
     WINDOW* window = initscr();
     char pressed = 0;
@@ -17,14 +17,18 @@ void init_automata(const uint16_t seed, char* rulestring)
 
     // Initialize
     ruleset = init_ruleset(rulestring);
-    grid = init_grid(LINES * ROWS_PER_LINE, COLS);
+    grid = init_grid(LINES * ROWS_PER_LINE, COLS, (anti) ? ALIVE : DEAD);
+
+    if (anti)
+    {
+        reverse(ruleset);
+    }
 
     randomize_grid();
     update_automata();
     draw_automata();
 
-    // TODO: Find definition for CTRL-C
-    while (pressed != 0x03)
+    while (pressed != CTRL_C)
     {
         update_alarms();
 
@@ -72,7 +76,7 @@ void update_automata()
             alive_neighbors = get_alive_neighbors(row, col);
             cell = get_grid(grid, row, col);
             
-            if ((cell == ALIVE) && get_survival_flag(ruleset, alive_neighbors))
+            if ((cell == ALIVE) && get_survive_flag(ruleset, alive_neighbors))
             {
                 set_grid(grid, row, col, cell | MASK_NEXT_TURN);
             }

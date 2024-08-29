@@ -16,14 +16,9 @@ typedef struct
 	uint32_t ticks;
 } ALARM;
 
-/* Alarms */
-
 void update_alarms();
 void register_alarm(const func_ptr call, const uint32_t ticks);
 void clear_alarms();
-
-/* Interrupt Service Routine */
-
 void install_timer_isr();
 void restore_old_timer_isr();
 

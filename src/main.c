@@ -17,12 +17,17 @@ static void display_help()
 {
 	display_usage();
 	puts("options:");
+	printf("  -%-14s --%-18s %s\n", "a", "anti", "Black/white reversal.");
 	printf("  -%-14s --%-18s %s\n", "h", "help", "Show help.");
 	printf("  -%-14s --%-18s %s\n", "s <seed>", "seed <seed>", "Set seed.");
 	printf("  -%-14s --%-18s %s\n", "v", "version", "Show version.");
-	puts("rulestring examples:");
-	puts("  B3/S23          Conway's Game Of Life");
-	puts("  B35678/S5678    Diamoeba");
+	puts("rulestrings:");
+	puts("  B1357/S1357          Replicator");
+	puts("  B2/S                 Seeds");
+	puts("  B3/S23               Life");
+	puts("  B35678/S5678         Diamoeba");
+	puts("  B4678/S35678         Anneal");
+	puts("  B3/12345             Maze");
 }
 
 static void display_version()
@@ -33,12 +38,16 @@ static void display_version()
 extern int main(const int argc, char** argv)
 {
 	uint16_t seed = time(NULL);
+	bool anti = false;
 	int opt = 0;
 
-	while ((opt = getopt(argc, argv, "hsv")) != -1)
+	while ((opt = getopt(argc, argv, "ahsv")) != -1)
 	{
 		switch (opt)
 		{
+		case 'a':
+			anti = true;
+			break;
 		case 'h':
 			display_help();
 			exit(EXIT_SUCCESS);
@@ -54,6 +63,6 @@ extern int main(const int argc, char** argv)
 		}
 	}
 
-	init_automata(seed, argv[argc - 1]);
+	init_automata(seed, argv[argc - 1], anti);
 	return EXIT_SUCCESS;
 }
