@@ -21,10 +21,19 @@
 
 #define CTRL_C 0x03
 
-void init_automata(const uint16_t seed, char* rulestring, const bool anti);
+void init_automata(
+    const uint16_t seed,
+    char* rulestring,
+    const bool anti);
+
 void update_automata();
+
 void draw_automata();
+
 void randomize_grid();
-uint8_t get_alive_neighbors(const size_t row, const size_t col);
+
+uint8_t get_alive_neighbors(
+    const size_t row, 
+    const size_t col);
 
 #endif

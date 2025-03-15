@@ -5,7 +5,6 @@ GRID* init_grid(const size_t height, const size_t width, const uint8_t default_v
     GRID* new_grid = (GRID*) malloc(sizeof(GRID));
     size_t row;
 
-    // Allocate memory for grid data
     new_grid->data = (uint8_t**) malloc(height * sizeof(uint8_t*));
     for (row = 0; row < height; row++)
     {

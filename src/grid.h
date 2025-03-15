@@ -4,8 +4,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-typedef struct
-{
+typedef struct {
     uint8_t** data;
     uint8_t default_val;
     size_t height;

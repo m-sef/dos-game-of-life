@@ -37,7 +37,9 @@ static void display_version()
 	puts("gol " VERSION);
 }
 
-extern int main(const int argc, char** argv)
+extern int main(
+	const int argc,
+	char** argv)
 {
 	uint16_t seed = time(NULL);
 	bool anti = false;
@@ -55,7 +57,7 @@ extern int main(const int argc, char** argv)
 			exit(EXIT_SUCCESS);
 		case 's':
 			seed = atoi(optarg);
-			continue;;
+			continue;
 		case 'v':
 			display_version();
 			exit(EXIT_SUCCESS);

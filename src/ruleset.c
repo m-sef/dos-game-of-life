@@ -1,6 +1,7 @@
 #include "ruleset.h"
 
-RULESET* init_ruleset(char* rulestring)
+RULESET* init_ruleset(
+    char* rulestring)
 {
     RULESET* new_ruleset = (RULESET*) malloc(sizeof(RULESET));
 
@@ -13,7 +14,9 @@ RULESET* init_ruleset(char* rulestring)
     return new_ruleset;
 }
 
-void parse_rulestring(RULESET* ruleset, char* rulestring)
+void parse_rulestring(
+    RULESET* ruleset,
+    char* rulestring)
 {
     char* token;
     int i;
@@ -45,22 +48,30 @@ void parse_rulestring(RULESET* ruleset, char* rulestring)
     }
 }
 
-void set_birth_flag(RULESET* ruleset, const uint8_t n)
+void set_birth_flag(
+    RULESET* ruleset,
+    const uint8_t n)
 {
     ruleset->birth_flags |= 1 << n;
 }
 
-bool get_birth_flag(const RULESET* ruleset, const uint8_t n)
+bool get_birth_flag(
+    const RULESET* ruleset,
+    const uint8_t n)
 {
     return (ruleset->birth_flags >> n) & 1;
 }
 
-void set_survive_flag(RULESET* ruleset, const uint8_t n)
+void set_survive_flag(
+    RULESET* ruleset,
+    const uint8_t n)
 {
     ruleset->survive_flags |= 1 << n;
 }
 
-bool get_survive_flag(const RULESET* ruleset, const uint8_t n)
+bool get_survive_flag(
+    const RULESET* ruleset,
+    const uint8_t n)
 {
     return (ruleset->survive_flags >> n) & 1;
 }

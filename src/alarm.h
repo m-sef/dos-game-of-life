@@ -17,9 +17,15 @@ typedef struct
 } ALARM;
 
 void update_alarms();
-void register_alarm(const func_ptr call, const uint32_t ticks);
+
+void register_alarm(
+	const func_ptr call,
+	const uint32_t ticks);
+
 void clear_alarms();
+
 void install_timer_isr();
+
 void restore_old_timer_isr();
 
 #endif

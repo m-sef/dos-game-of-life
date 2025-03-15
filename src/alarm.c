@@ -39,7 +39,9 @@ void update_alarms()
 	}
 }
 
-void register_alarm(const func_ptr call, const uint32_t ticks)
+void register_alarm(
+	const func_ptr call,
+	const uint32_t ticks)
 {
 	int i;
 	

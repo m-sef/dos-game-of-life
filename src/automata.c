@@ -3,7 +3,10 @@
 RULESET* ruleset;
 GRID* grid;
 
-void init_automata(const uint16_t seed, char* rulestring, const bool anti)
+void init_automata(
+    const uint16_t seed, 
+    char* rulestring, 
+    const bool anti)
 {
     WINDOW* window = initscr();
     char pressed = 0;
@@ -15,7 +18,6 @@ void init_automata(const uint16_t seed, char* rulestring, const bool anti)
 
     install_timer_isr();
 
-    // Initialize
     ruleset = init_ruleset(rulestring);
     grid = init_grid(LINES * ROWS_PER_LINE, COLS, (anti) ? ALIVE : DEAD);
 
@@ -38,9 +40,14 @@ void init_automata(const uint16_t seed, char* rulestring, const bool anti)
     restore_old_timer_isr();
 
     endwin();
+
+    system("cls");
 }
 
-uint8_t get_alive_neighbors(const size_t row, const size_t col)
+
+uint8_t get_alive_neighbors(
+    const size_t row,
+    const size_t col)
 {
     uint8_t alive_neighbors = 0;
     int row_offset;
