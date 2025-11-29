@@ -4,7 +4,7 @@ Life-like celluar automata simulation for DOS, capable of simulating over 262K d
 
 ## __Dependencies__
 
-* PDCurses
+* [PDCurses](https://github.com/wmcbrine/PDCurses)
 
 ## __Setup__
 
