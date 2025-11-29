@@ -1,17 +1,11 @@
-# DOS Game Of Life
+# __DOS Game Of Life__
 
-## Life-like celluar automata simulation for DOS
+Life-like celluar automata simulation for DOS, capable of simulating over 262K different rulesets!
 
-## Compile and run
+## __Dependencies__
 
-1. Download and unpack the source code
-2. Download the PDCurses source code from
-3. Download the installer for the OpenWatcom compiler from
-4. Run the installer for the OpenWatcom compiler
-5. Compile PDCurses
-6. Compile gol using `Wmake`
-7. Run `gol` from the current directory
+* PDCurses
 
-## Usage
+## __Setup__
 
-## Known Issues
+I am going to be dead honest here, I'm writing this README almost a year after I wrote and compiled this. That is to say, I've honestly forgotten how to link the PDCurses library. You are going to need to figure that out yourself. After that, it should be as simple as compiling with the OpenWatcom compiler.
