@@ -2,6 +2,10 @@
 
 Life-like celluar automata simulation for DOS, capable of simulating over 262K different rulesets!
 
+![Conway's Game of Life](/screenshot-1.png)
+![Maze? I honestly forgot this one too](/screenshot-2.png)
+![Usage](/screenshot-3.png)
+
 ## __Dependencies__
 
 * [PDCurses](https://github.com/wmcbrine/PDCurses)
